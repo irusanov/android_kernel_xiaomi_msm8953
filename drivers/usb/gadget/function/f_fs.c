@@ -1704,7 +1704,7 @@ static int ffs_epfiles_create(struct ffs_data *ffs)
 		if (ffs->user_flags & FUNCTIONFS_VIRTUAL_ADDR)
 			sprintf(epfiles->name, "ep%02x", ffs->eps_addrmap[i]);
 		else
-			sprintf(epfiles->name, "ep%u", i);
+			sprintf(epfiles->name, "ep%d", i);
 		epfile->dentry = ffs_sb_create_file(ffs->sb, epfiles->name,
 						 epfile,
 						 &ffs_epfile_operations);

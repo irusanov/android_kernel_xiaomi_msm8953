@@ -571,7 +571,7 @@ limProcessMlmAuthCnf(tpAniSirGlobal pMac, tANI_U32 *pMsgBuf)
                 }
         else
             cfgAuthType = pMac->lim.gLimPreAuthType;
-        
+
         if ((cfgAuthType == eSIR_AUTO_SWITCH) &&
              (pMlmAuthCnf->authType == eSIR_SHARED_KEY)
              && ((eSIR_MAC_AUTH_ALGO_NOT_SUPPORTED_STATUS ==
@@ -1076,7 +1076,7 @@ limProcessMlmReassocInd(tpAniSirGlobal pMac, tANI_U32 *pMsgBuf)
     pSirSmeReassocInd->assocReqPtr = ((tpLimMlmReassocInd) pMsgBuf)->assocReqPtr;
     pSirSmeReassocInd->beaconPtr = psessionEntry->beacon;
     pSirSmeReassocInd->beaconLength = psessionEntry->bcnLen;
-    
+
     msgQ.type = eWNI_SME_REASSOC_IND;
     msgQ.bodyptr = pSirSmeReassocInd;
     msgQ.bodyval = 0;
@@ -1169,7 +1169,7 @@ limFillAssocIndParams(tpAniSirGlobal pMac, tpLimMlmAssocInd pAssocInd,
     pSirSmeAssocInd->assocReqPtr = pAssocInd->assocReqPtr;
 
     pSirSmeAssocInd->beaconPtr = psessionEntry->beacon;
-    pSirSmeAssocInd->beaconLength = psessionEntry->bcnLen;    
+    pSirSmeAssocInd->beaconLength = psessionEntry->bcnLen;
 
     // Fill in peerMacAddr
     vos_mem_copy(pSirSmeAssocInd->peerMacAddr, pAssocInd->peerMacAddr,
@@ -1874,7 +1874,7 @@ error:
  *FUNCTION:
  * This function is called to process reassoc failures
  * upon receiving REASSOC_CNF with a failure code or
- * MLM_REASSOC_CNF with a success code in case of STA role 
+ * MLM_REASSOC_CNF with a success code in case of STA role
  *
  *LOGIC:
  *
@@ -2825,7 +2825,7 @@ limProcessStaMlmAddBssRspPreAssoc( tpAniSirGlobal pMac, tpSirMsgQ limMsgQ, tpPES
                 limLog(pMac, LOGP,
                        FL("could not retrieve AuthType"));
             }
-            if (cfgAuthType == eSIR_AUTO_SWITCH) 
+            if (cfgAuthType == eSIR_AUTO_SWITCH)
                 authMode = eSIR_SHARED_KEY; // Try Shared Authentication first
             else
                 authMode = cfgAuthType;
@@ -2908,7 +2908,7 @@ joinFailure:
 static inline void
 limProcessStaMlmAddBssRspFT(tpAniSirGlobal pMac, tpSirMsgQ limMsgQ, tpPESession psessionEntry)
 {
-    tLimMlmReassocCnf       mlmReassocCnf; // keep sme 
+    tLimMlmReassocCnf       mlmReassocCnf; // keep sme
     tpDphHashNode pStaDs    = NULL;
     tpAddStaParams pAddStaParams = NULL;
     tANI_U32 listenInterval = WNI_CFG_LISTEN_INTERVAL_STADEF;
@@ -3712,14 +3712,14 @@ void limProcessInitScanRsp(tpAniSirGlobal pMac,  void *body)
     vos_mem_free(body);
 
     //Only abort scan if the we are scanning.
-    if( pMac->lim.abortScan && 
+    if( pMac->lim.abortScan &&
        (eLIM_HAL_INIT_SCAN_WAIT_STATE == pMac->lim.gLimHalScanState) )
     {
         limLog( pMac, LOGW, FL(" abort scan") );
         pMac->lim.abortScan = 0;
         limDeactivateAndChangeTimer(pMac, eLIM_MIN_CHANNEL_TIMER);
         limDeactivateAndChangeTimer(pMac, eLIM_MAX_CHANNEL_TIMER);
-        //Set the resume channel to Any valid channel (invalid). 
+        //Set the resume channel to Any valid channel (invalid).
         //This will instruct HAL to set it to any previous valid channel.
         peSetResumeChannel(pMac, 0, 0);
         if (status != eHAL_STATUS_SUCCESS)
@@ -3940,7 +3940,7 @@ static void limProcessSwitchChannelJoinReq(tpAniSirGlobal pMac, tpPESession pses
         goto error;
     }
 
-   
+
     /* eSIR_BTAMP_AP_MODE stroed as bss type in session Table when join req is received, is to be veified   */
     if(psessionEntry->bssType == eSIR_BTAMP_AP_MODE)
     {
@@ -4033,7 +4033,7 @@ static void limProcessSwitchChannelJoinReq(tpAniSirGlobal pMac, tpPESession pses
     }
 
     return;
-error:  
+error:
     if(NULL != psessionEntry)
     {
         vos_mem_free(psessionEntry->pLimMlmJoinReq);
@@ -4187,7 +4187,7 @@ void limProcessStartScanRsp(tpAniSirGlobal pMac,  void *body)
         pMac->lim.abortScan = 0;
         limDeactivateAndChangeTimer(pMac, eLIM_MIN_CHANNEL_TIMER);
         limDeactivateAndChangeTimer(pMac, eLIM_MAX_CHANNEL_TIMER);
-        //Set the resume channel to Any valid channel (invalid). 
+        //Set the resume channel to Any valid channel (invalid).
         //This will instruct HAL to set it to any previous valid channel.
         peSetResumeChannel(pMac, 0, 0);
         limSendHalFinishScanReq(pMac, eLIM_HAL_FINISH_SCAN_WAIT_STATE);
@@ -4203,7 +4203,7 @@ void limProcessStartScanRsp(tpAniSirGlobal pMac,  void *body)
                // eWNI_SME_SCAN_CNF maybe reporting an incorrect
                // status back to the SME
                //
-               //Set the resume channel to Any valid channel (invalid). 
+               //Set the resume channel to Any valid channel (invalid).
                //This will instruct HAL to set it to any previous valid channel.
                peSetResumeChannel(pMac, 0, 0);
                limSendHalFinishScanReq( pMac, eLIM_HAL_FINISH_SCAN_WAIT_STATE );
@@ -4271,19 +4271,19 @@ limStopTxAndSwitch (tpAniSirGlobal pMac)
 
     for(i =0; i < pMac->lim.maxBssId; i++)
     {
-        if(pMac->lim.gpSession[i].valid && 
+        if(pMac->lim.gpSession[i].valid &&
             pMac->lim.gpSession[i].gLimSpecMgmt.dot11hChanSwState == eLIM_11H_CHANSW_RUNNING)
         {
             limStopTxAndSwitchChannel(pMac, i);
         }
     }
-    return; 
+    return;
 }
 /**
  * limStartQuietOnSession()
  *
  *FUNCTION:
- * This function is called to start quiet timer after finish scan if there is  
+ * This function is called to start quiet timer after finish scan if there is
  *      qeuieting on any session.
  *
  *LOGIC:
@@ -4305,7 +4305,7 @@ limStartQuietOnSession (tpAniSirGlobal pMac)
 
     for(i =0; i < pMac->lim.maxBssId; i++)
     {
-        if(pMac->lim.gpSession[i].valid && 
+        if(pMac->lim.gpSession[i].valid &&
             pMac->lim.gpSession[i].gLimSpecMgmt.quietState == eLIM_QUIET_BEGIN)
         {
             limStartQuietTimer(pMac, i);
@@ -4827,7 +4827,7 @@ limHandleDelBssInReAssocContext(tpAniSirGlobal pMac, tpDphHashNode pStaDs,tpPESe
               pBeaconStruct);
             if(pMac->lim.gLimProtectionControl != WNI_CFG_FORCE_POLICY_PROTECTION_DISABLE)
                 limDecideStaProtectionOnAssoc(pMac, pBeaconStruct, psessionEntry);
-                if(pBeaconStruct->erpPresent) {
+            if(pBeaconStruct->erpPresent) {
                 if (pBeaconStruct->erpIEInfo.barkerPreambleMode)
                     psessionEntry->beaconParams.fShortPreamble = 0;
                 else
@@ -5007,7 +5007,7 @@ limHandleAddBssInReAssocContext(tpAniSirGlobal pMac, tpDphHashNode pStaDs, tpPES
             if(pMac->lim.gLimProtectionControl != WNI_CFG_FORCE_POLICY_PROTECTION_DISABLE)
                 limDecideStaProtectionOnAssoc(pMac, pBeaconStruct, psessionEntry);
 
-            if(pBeaconStruct->erpPresent) 
+            if(pBeaconStruct->erpPresent)
             {
                 if (pBeaconStruct->erpIEInfo.barkerPreambleMode)
                     psessionEntry->beaconParams.fShortPreamble = 0;
@@ -5156,11 +5156,11 @@ limProcessSmeAssocCnfNew(tpAniSirGlobal pMac, tANI_U32 msgType, tANI_U32 *pMsgBu
 end:
     if ( psessionEntry->parsedAssocReq[pStaDs->assocId] != NULL )
     {
-        if ( ((tpSirAssocReq)(psessionEntry->parsedAssocReq[pStaDs->assocId]))->assocReqFrame) 
+        if ( ((tpSirAssocReq)(psessionEntry->parsedAssocReq[pStaDs->assocId]))->assocReqFrame)
         {
             vos_mem_free(((tpSirAssocReq)(psessionEntry->parsedAssocReq[pStaDs->assocId]))->assocReqFrame);
             ((tpSirAssocReq)(psessionEntry->parsedAssocReq[pStaDs->assocId]))->assocReqFrame = NULL;
-        }        
+        }
 
         vos_mem_free(psessionEntry->parsedAssocReq[pStaDs->assocId]);
         psessionEntry->parsedAssocReq[pStaDs->assocId] = NULL;

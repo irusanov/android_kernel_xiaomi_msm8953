@@ -89,17 +89,17 @@ extern safeChannelType safeChannels[];
 /*==========================================================================
   FUNCTION    sapCleanupChannelList
 
-  DESCRIPTION 
+  DESCRIPTION
     Function sapCleanupChannelList frees up the memory allocated to the channel list.
 
-  DEPENDENCIES 
-    NA. 
+  DEPENDENCIES
+    NA.
 
-  PARAMETERS 
+  PARAMETERS
 
     IN
     NULL
-   
+
   RETURN VALUE
     NULL
 ============================================================================*/
@@ -109,7 +109,7 @@ void sapCleanupChannelList(void)
     v_PVOID_t pvosGCtx = vos_get_global_context(VOS_MODULE_ID_SAP, NULL);
     ptSapContext pSapCtx;
 
-    VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO, 
+    VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO,
                "Cleaning up the channel list structure");
 
     if (NULL == pvosGCtx)
@@ -183,18 +183,18 @@ typedef enum {
 /*==========================================================================
   FUNCTION    sapSetPreferredChannel
 
-  DESCRIPTION 
+  DESCRIPTION
     Function sapSetPreferredChannel sets the channel list which has been configured
-    into sap context (pSapCtx) which will be used at the time of best channel selection. 
+    into sap context (pSapCtx) which will be used at the time of best channel selection.
 
-  DEPENDENCIES 
-    NA. 
+  DEPENDENCIES
+    NA.
 
-  PARAMETERS 
+  PARAMETERS
 
     IN
     *ptr: pointer having the command followed by the arguments in string format
-   
+
   RETURN VALUE
     int:  return 0 when success else returns error code.
 ============================================================================*/
@@ -208,7 +208,7 @@ int sapSetPreferredChannel(tANI_U8* ptr)
     int tempInt;
     int j;
 
-    VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, 
+    VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH,
                "Enter: %s", __func__);
 
     if (NULL == pvosGCtx)
@@ -263,7 +263,7 @@ int sapSetPreferredChannel(tANI_U8* ptr)
         return -EINVAL;
     }
 
-    VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, 
+    VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH,
                "%s: Number of channel added are: %d", __func__, tempInt);
 
     if (tempInt <= 0 || tempInt > 255)
@@ -288,7 +288,7 @@ int sapSetPreferredChannel(tANI_U8* ptr)
     {
 
         /*param pointing to the beginning of first space after number of channels*/
-        param = strpbrk( param, " " ); 
+        param = strpbrk( param, " " );
         /*no channel list after the number of channels argument*/
         if (NULL == param)
         {
@@ -325,7 +325,7 @@ int sapSetPreferredChannel(tANI_U8* ptr)
 
         pSapCtx->SapChnlList.channelList[j] = tempInt;
 
-        VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, 
+        VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH,
                    "%s: Channel %d added to preferred channel list",
                    __func__, pSapCtx->SapChnlList.channelList[j] );
 
@@ -344,7 +344,7 @@ int sapSetPreferredChannel(tANI_U8* ptr)
         }
     }
 
-    VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, 
+    VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH,
                "Exit: %s", __func__);
 
     return 0;
@@ -353,26 +353,26 @@ int sapSetPreferredChannel(tANI_U8* ptr)
 /*==========================================================================
   FUNCTION    sapSelectPreferredChannelFromChannelList
 
-  DESCRIPTION 
+  DESCRIPTION
     Function sapSelectPreferredChannelFromChannelList calculates the best channel
-    among the configured channel list. If channel list not configured then returns 
+    among the configured channel list. If channel list not configured then returns
     the best channel calculated among all the channel list.
 
-  DEPENDENCIES 
-    NA. 
+  DEPENDENCIES
+    NA.
 
-  PARAMETERS 
+  PARAMETERS
 
     IN
     *pSpectInfoParams  : Pointer to tSapChSelSpectInfo structure
     bestChNum: best channel already calculated among all the chanels
-    pSapCtx: having info of channel list from which best channel is selected 
-   
+    pSapCtx: having info of channel list from which best channel is selected
+
   RETURN VALUE
     v_U8_t:  best channel
 ============================================================================*/
-v_U8_t sapSelectPreferredChannelFromChannelList(v_U8_t bestChNum, 
-                                                ptSapContext pSapCtx, 
+v_U8_t sapSelectPreferredChannelFromChannelList(v_U8_t bestChNum,
+                                                ptSapContext pSapCtx,
                                                 tSapChSelSpectInfo *pSpectInfoParams)
 {
     v_U8_t j = 0;
@@ -380,8 +380,8 @@ v_U8_t sapSelectPreferredChannelFromChannelList(v_U8_t bestChNum,
 
     //If Channel List is not Configured don't do anything
     //Else return the Best Channel from the Channel List
-    if((NULL == pSapCtx->SapChnlList.channelList) || 
-       (NULL == pSpectInfoParams) || 
+    if((NULL == pSapCtx->SapChnlList.channelList) ||
+       (NULL == pSpectInfoParams) ||
        (0 == pSapCtx->SapChnlList.numChannel))
     {
         return bestChNum;
@@ -397,8 +397,8 @@ v_U8_t sapSelectPreferredChannelFromChannelList(v_U8_t bestChNum,
             {
                 if( (pSapCtx->SapChnlList.channelList[j]) == bestChNum)
                 {
-                    VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, 
-                               "Best channel computed from Channel List is: %d", 
+                    VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH,
+                               "Best channel computed from Channel List is: %d",
                                bestChNum);
                     return bestChNum;
                 }
@@ -415,22 +415,22 @@ v_U8_t sapSelectPreferredChannelFromChannelList(v_U8_t bestChNum,
 /*==========================================================================
   FUNCTION    sapChanSelInit
 
-  DESCRIPTION 
+  DESCRIPTION
     Function sapChanSelInit allocates the memory, intializes the
          structures used by the channel selection algorithm
 
-  DEPENDENCIES 
-    NA. 
+  DEPENDENCIES
+    NA.
 
-  PARAMETERS 
+  PARAMETERS
 
     IN
     *pSpectInfoParams  : Pointer to tSapChSelSpectInfo structure
-   
+
   RETURN VALUE
     v_BOOL_t:  Success or FAIL
-  
-  SIDE EFFECTS 
+
+  SIDE EFFECTS
 ============================================================================*/
 v_BOOL_t sapChanSelInit(tHalHandle halHandle, tSapChSelSpectInfo *pSpectInfoParams)
 {
@@ -448,7 +448,7 @@ v_BOOL_t sapChanSelInit(tHalHandle halHandle, tSapChSelSpectInfo *pSpectInfoPara
     // Channels for that 2.4GHz band
     //Considered only for 2.4GHz need to change in future to support 5GHz support
     pSpectInfoParams->numSpectChans = pMac->scan.base20MHzChannels.numChannels;
-       
+
     // Allocate memory for weight computation of 2.4GHz
     pSpectCh = (tSapSpectChInfo *)vos_mem_malloc((pSpectInfoParams->numSpectChans) * sizeof(*pSpectCh));
 
@@ -512,30 +512,30 @@ v_BOOL_t sapChanSelInit(tHalHandle halHandle, tSapChSelSpectInfo *pSpectInfoPara
 /*==========================================================================
   FUNCTION    sapweightRssiCount
 
-  DESCRIPTION 
+  DESCRIPTION
     Function weightRssiCount calculates the channel weight due to rssi
          and data count(here number of BSS observed)
-         
-  DEPENDENCIES 
-    NA. 
 
-  PARAMETERS 
+  DEPENDENCIES
+    NA.
+
+  PARAMETERS
 
     IN
     rssi        : Max signal strength receieved from a BSS for the channel
     count       : Number of BSS observed in the channel
-   
+
   RETURN VALUE
     v_U32_t     : Calculated channel weight based on above two
-  
-  SIDE EFFECTS 
+
+  SIDE EFFECTS
 ============================================================================*/
 v_U32_t sapweightRssiCount(v_S7_t rssi, v_U16_t count)
 {
     v_S31_t     rssiWeight=0;
     v_S31_t     countWeight=0;
     v_U32_t     rssicountWeight=0;
-    
+
     // Weight from RSSI
     rssiWeight = SOFTAP_RSSI_WEIGHT * (rssi - SOFTAP_MIN_RSSI)
                  /(SOFTAP_MAX_RSSI - SOFTAP_MIN_RSSI);
@@ -552,11 +552,11 @@ v_U32_t sapweightRssiCount(v_S7_t rssi, v_U16_t count)
     if(countWeight > SOFTAP_COUNT_WEIGHT)
         countWeight = SOFTAP_COUNT_WEIGHT;
 
-    rssicountWeight =  rssiWeight + countWeight;      
+    rssicountWeight =  rssiWeight + countWeight;
 
     VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, rssiWeight=%d, countWeight=%d, rssicountWeight=%d",
               __func__, rssiWeight, countWeight, rssicountWeight);
-    
+
     return(rssicountWeight);
 }
 
@@ -1308,25 +1308,25 @@ void sapInterferenceRssiCount(tSapSpectChInfo *pSpectCh)
 /*==========================================================================
   FUNCTION    sapComputeSpectWeight
 
-  DESCRIPTION 
+  DESCRIPTION
     Main function for computing the weight of each channel in the
     spectrum based on the RSSI value of the BSSes on the channel
     and number of BSS
-    
-  DEPENDENCIES 
-    NA. 
 
-  PARAMETERS 
+  DEPENDENCIES
+    NA.
+
+  PARAMETERS
 
     IN
     pSpectInfoParams       : Pointer to the tSpectInfoParams structure
     halHandle              : Pointer to HAL handle
     pResult                : Pointer to tScanResultHandle
-   
+
   RETURN VALUE
     void     : NULL
-  
-  SIDE EFFECTS 
+
+  SIDE EFFECTS
 ============================================================================*/
 void sapComputeSpectWeight( tSapChSelSpectInfo* pSpectInfoParams,
                              tHalHandle halHandle, tScanResultHandle pResult)
@@ -1345,6 +1345,7 @@ void sapComputeSpectWeight( tSapChSelSpectInfo* pSpectInfoParams,
     v_U32_t ieLen = 0;
     tSirProbeRespBeacon *pBeaconStruct;
     tpAniSirGlobal  pMac = (tpAniSirGlobal) halHandle;
+    tSapSpectChInfo *pExtSpectCh = NULL;
 
     pBeaconStruct = vos_mem_malloc(sizeof(tSirProbeRespBeacon));
     if ( NULL == pBeaconStruct )
@@ -1397,7 +1398,7 @@ void sapComputeSpectWeight( tSapChSelSpectInfo* pSpectInfoParams,
         for (chn_num = 0; chn_num < pSpectInfoParams->numSpectChans; chn_num++) {
 
             /*
-             *  if the Beacon has channel ID, use it other wise we will 
+             *  if the Beacon has channel ID, use it other wise we will
              *  rely on the channelIdSelf
              */
             if(pScanResult->BssDescriptor.channelId == 0)
@@ -1425,7 +1426,6 @@ void sapComputeSpectWeight( tSapChSelSpectInfo* pSpectInfoParams,
                         case eHT_CHANNEL_WIDTH_40MHZ: //HT40
                             switch( secondaryChannelOffset)
                             {
-                                tSapSpectChInfo *pExtSpectCh = NULL;
                                 case PHY_DOUBLE_CHANNEL_LOW_PRIMARY: // Above the Primary Channel
                                     pExtSpectCh = (pSpectCh + 1);
                                     if(pExtSpectCh != NULL)
@@ -1444,7 +1444,7 @@ void sapComputeSpectWeight( tSapChSelSpectInfo* pSpectInfoParams,
 
                                 case PHY_DOUBLE_CHANNEL_HIGH_PRIMARY: // Below the Primary channel
                                     pExtSpectCh = (pSpectCh - 1);
-                                    if(pExtSpectCh != NULL) 
+                                    if(pExtSpectCh != NULL)
                                     {
                                         rssi = pSpectCh->rssiAgr + SAP_SUBBAND1_RSSI_EFFECT_PRIMARY;
                                         if (IS_RSSI_VALID(pExtSpectCh->rssiAgr, rssi))
@@ -1461,7 +1461,6 @@ void sapComputeSpectWeight( tSapChSelSpectInfo* pSpectInfoParams,
                         case eHT_CHANNEL_WIDTH_80MHZ: // VHT80
                             if((centerFreq - channel_id) == 6)
                             {
-                                tSapSpectChInfo *pExtSpectCh = NULL;
                                 pExtSpectCh = (pSpectCh + 1);
                                 if(pExtSpectCh != NULL)
                                 {
@@ -1501,7 +1500,6 @@ void sapComputeSpectWeight( tSapChSelSpectInfo* pSpectInfoParams,
                             }
                             else if((centerFreq - channel_id) == 2)
                             {
-                                tSapSpectChInfo *pExtSpectCh = NULL;
                                 pExtSpectCh = (pSpectCh - 1 );
                                 if(pExtSpectCh != NULL)
                                 {
@@ -1541,7 +1539,6 @@ void sapComputeSpectWeight( tSapChSelSpectInfo* pSpectInfoParams,
                             }
                             else if((centerFreq - channel_id) == -2)
                             {
-                                tSapSpectChInfo *pExtSpectCh = NULL;
                                 pExtSpectCh = (pSpectCh - 1 );
                                 if(pExtSpectCh != NULL)
                                 {
@@ -1581,7 +1578,6 @@ void sapComputeSpectWeight( tSapChSelSpectInfo* pSpectInfoParams,
                             }
                             else if((centerFreq - channel_id) == -6)
                             {
-                                tSapSpectChInfo *pExtSpectCh = NULL;
                                 pExtSpectCh = (pSpectCh - 1 );
                                 if(pExtSpectCh != NULL)
                                 {
@@ -1671,22 +1667,22 @@ void sapComputeSpectWeight( tSapChSelSpectInfo* pSpectInfoParams,
 /*==========================================================================
   FUNCTION    sapChanSelExit
 
-  DESCRIPTION 
-    Exit function for free out the allocated memory, to be called 
+  DESCRIPTION
+    Exit function for free out the allocated memory, to be called
     at the end of the dfsSelectChannel function
-    
-  DEPENDENCIES 
-    NA. 
 
-  PARAMETERS 
+  DEPENDENCIES
+    NA.
+
+  PARAMETERS
 
     IN
     pSpectInfoParams       : Pointer to the tSapChSelSpectInfo structure
-   
+
   RETURN VALUE
     void     : NULL
-  
-  SIDE EFFECTS 
+
+  SIDE EFFECTS
 ============================================================================*/
 void sapChanSelExit( tSapChSelSpectInfo *pSpectInfoParams )
 {
@@ -1697,21 +1693,21 @@ void sapChanSelExit( tSapChSelSpectInfo *pSpectInfoParams )
 /*==========================================================================
   FUNCTION    sapSortChlWeight
 
-  DESCRIPTION 
+  DESCRIPTION
     Funtion to sort the channels with the least weight first
-    
-  DEPENDENCIES 
-    NA. 
 
-  PARAMETERS 
+  DEPENDENCIES
+    NA.
+
+  PARAMETERS
 
     IN
     pSpectInfoParams       : Pointer to the tSapChSelSpectInfo structure
-   
+
   RETURN VALUE
     void     : NULL
-  
-  SIDE EFFECTS 
+
+  SIDE EFFECTS
 ============================================================================*/
 void sapSortChlWeight(tSapChSelSpectInfo *pSpectInfoParams)
 {
@@ -1725,7 +1721,7 @@ void sapSortChlWeight(tSapChSelSpectInfo *pSpectInfoParams)
         minWeightIndex = i;
         for( j = i + 1; j < pSpectInfoParams->numSpectChans; j++) {
             if(pSpectCh[j].weight < pSpectCh[minWeightIndex].weight) {
-                minWeightIndex = j; 
+                minWeightIndex = j;
             }
         }
         if(minWeightIndex != i) {
@@ -2092,7 +2088,7 @@ void sapSortChlWeightAll(ptSapContext pSapCtx,
         minWeightIndex = i;
         for( j = i + 1; j < SPECT_24GHZ_CH_COUNT; j++) {
             if(pSpectCh[j].weight < pSpectCh[minWeightIndex].weight) {
-                minWeightIndex = j; 
+                minWeightIndex = j;
             }
         }
         if(minWeightIndex != i) {
@@ -2153,29 +2149,29 @@ eChannelWidthInfo sapGetChannelWidthInfo(tHalHandle halHandle, ptSapContext pSap
 /*==========================================================================
   FUNCTION    sapSelectChannel
 
-  DESCRIPTION 
-    Runs a algorithm to select the best channel to operate in based on BSS 
+  DESCRIPTION
+    Runs a algorithm to select the best channel to operate in based on BSS
     rssi and bss count on each channel
-    
-  DEPENDENCIES 
-    NA. 
 
-  PARAMETERS 
+  DEPENDENCIES
+    NA.
+
+  PARAMETERS
 
     IN
     halHandle       : Pointer to HAL handle
     pResult         : Pointer to tScanResultHandle
-   
+
   RETURN VALUE
     v_U8_t          : Success - channel number, Fail - zero
-  
-  SIDE EFFECTS 
+
+  SIDE EFFECTS
 ============================================================================*/
 v_U8_t sapSelectChannel(tHalHandle halHandle, ptSapContext pSapCtx,  tScanResultHandle pScanResult)
 {
     // DFS param object holding all the data req by the algo
-    tSapChSelSpectInfo oSpectInfoParams = {NULL,0}; 
-    tSapChSelSpectInfo *pSpectInfoParams = &oSpectInfoParams; // Memory? NB    
+    tSapChSelSpectInfo oSpectInfoParams = {NULL,0};
+    tSapChSelSpectInfo *pSpectInfoParams = &oSpectInfoParams; // Memory? NB
     v_U8_t bestChNum = SAP_CHANNEL_NOT_SELECTED;
 #ifdef SOFTAP_CHANNEL_RANGE
     v_U32_t startChannelNum;
