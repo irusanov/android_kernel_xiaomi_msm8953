@@ -4,4 +4,12 @@ config MSM_CLK_CONTROLLER_V2
 	   Generate clock data structures from definitions found in
 	   device tree.
 
+config MSM8953_FORCE_TURBO
+	bool "MSM8953 TURBO"
+	default n
+	depends on ARCH_MSM8953
+	---help---
+	   Force 2.2GHz Turbo mode for MSM8953/SD625
+
+
 source "drivers/clk/msm/mdss/Kconfig"

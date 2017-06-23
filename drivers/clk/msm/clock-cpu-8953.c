@@ -648,13 +648,14 @@ static int of_get_fmax_vdd_class(struct platform_device *pdev, struct clk *c,
 static void get_speed_bin(struct platform_device *pdev, int *bin,
 								int *version)
 {
+#ifndef CONFIG_MSM8953_FORCE_TURBO
 	struct resource *res;
 	void __iomem *base;
 	u32 pte_efuse;
-
+#endif
 	*bin = 0;
 	*version = 0;
-
+#ifndef CONFIG_MSM8953_FORCE_TURBO
 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "efuse");
 	if (!res) {
 		dev_info(&pdev->dev,
@@ -673,7 +674,7 @@ static void get_speed_bin(struct platform_device *pdev, int *bin,
 	devm_iounmap(&pdev->dev, base);
 
 	*bin = (pte_efuse >> 8) & 0x7;
-
+#endif
 	dev_info(&pdev->dev, "Speed bin: %d PVS Version: %d\n", *bin,
 								*version);
 }

@@ -3678,6 +3678,7 @@ CONFIG_MACH_XIAOMI_MSM8953=y
 # Xiaomi board selection
 #
 CONFIG_MACH_XIAOMI_MIDO=y
+CONFIG_MSM8953_FORCE_TURBO=y
 
 #
 # SOC (System On Chip) specific Drivers
